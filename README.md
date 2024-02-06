@@ -5,72 +5,17 @@ DevOps Trial
 
 Terraform v1.2.9
 Google provider v5.15.0
-
 Ensure Terraform and the Google provider are at these versions to maintain compatibility with the configurations provided.
+
 
 ##GCP Infrastructure with Terraform
 
 This repository contains Terraform configurations for provisioning a Google Cloud Platform (GCP) environment, including a Virtual Private Cloud (VPC), subnets, firewall rules, a Google Cloud Storage (GCS) bucket for Terraform state management, a Cloud SQL database, and a Cloud Run service with an HTTP Load Balancer.
 
+
 ##Architecture Overview
 
 The infrastructure setup is divided into several key components, managed through reusable Terraform modules and configurations:
-
-rns.id/
-│
-├── gcp-vpc/
-│   ├── backend.tf
-│   ├── main.tf
-│   ├── outputs.tf
-│   ├── variables.tf
-│   └── versions.tf
-│
-├── gcp-database/
-│   ├── backend.tf
-│   ├── main.tf
-│   ├── outputs.tf
-│   ├── variables.tf
-│   └── versions.tf
-│
-├── cloud-run/
-│   ├── backend.tf
-│   ├── main.tf
-│   ├── outputs.tf
-│   ├── variables.tf
-│   └── versions.tf
-│
-├── remote-backend/
-│   ├── main.tf
-│   ├── outputs.tf
-│   ├── provider.tf
-│   └── variables.tf
-│
-└── modules/
-    ├── database/
-    │   ├── main.tf
-    │   ├── outputs.tf
-    │   └── variables.tf
-    │
-    ├── firewall/
-    │   ├── main.tf
-    │   ├── outputs.tf
-    │   └── variables.tf
-    │
-    ├── gcs/
-    │   ├── main.tf
-    │   ├── outputs.tf
-    │   └── variables.tf
-    │
-    ├── subnets/
-    │   ├── main.tf
-    │   ├── outputs.tf
-    │   └── variables.tf
-    │
-    └── vpc/
-        ├── main.tf
-        ├── outputs.tf
-        └── variables.tf
-
 
 VPC Network: A custom Virtual Private Cloud (VPC) network that includes public and private subnets across a specified region. This provides a segregated environment for resources and services.
 
@@ -152,6 +97,7 @@ Navigate to the rns.id/cloud-run/ directory.
 Run terraform init, terraform plan, and terraform apply.
 
 #####################################
+
 
 Services Running:
 I left the services running on my GCP account incase the team needs to confirm the URL for the LoadBalancer and Conatiner image on Cloud Run:
