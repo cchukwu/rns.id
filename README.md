@@ -99,14 +99,7 @@ remote-backend/: Sets up a GCS bucket to store Terraform state files.
 
 modules/: Reusable Terraform modules for VPC, subnets, firewall rules, database, and GCS bucket.
 
-##Key Terraform Files
-
-main.tf: The primary configuration file in each directory, defining the resource provisioning logic.
-variables.tf: Defines input variables for Terraform configurations, allowing customization.
-outputs.tf: Specifies output values that can be used for referencing in other configurations or for informational purposes.
-backend.tf: Configuration for Terraform backend to manage state files, specifically set to use GCS in this setup.
-versions.tf: Enforces specific versions of Terraform and the Google provider to ensure consistency across environments.
-
+#####################################
 
 ## USAGE
 
@@ -157,3 +150,42 @@ Step 5: Deploy the Cloud Run Service and Configure the HTTP Load Balancer
 Ensure the VPC and Cloud SQL Database are provisioned.
 Navigate to the rns.id/cloud-run/ directory.
 Run terraform init, terraform plan, and terraform apply.
+
+#####################################
+
+Services Running:
+I left the services running on my GCP account incase the team needs to confirm the URL for the LoadBalancer and Conatiner image on Cloud Run:
+
+load_balancer_ip = "34.98.125.202"
+service_url = "https://rns-service-ghtmekoyta-uc.a.run.app"
+
+
+
+Improvements/Best Practices:
+
+Infrastructure as Code (IaC) Practices
+Version Control: Use a version control system (e.g., Git) for Terraform configurations to track changes, review code, and manage releases.
+Code Review: Implement code review processes for Terraform changes to ensure quality and compliance with your organization's standards.
+Modularization: Utilize Terraform modules to reuse code, simplify management, and maintain consistency across your infrastructure.
+State Management: Use remote state backends (e.g., GCS) with state locking and encryption to securely manage Terraform state files. Consider splitting state files for different environments or components to reduce blast radius and improve manageability.
+
+Security and Compliance
+Principle of Least Privilege: Assign minimal necessary permissions to the Terraform service account and other GCP resources. Regularly audit IAM roles and permissions.
+Secrets Management: Avoid hardcoding sensitive information in Terraform files. Use Google Cloud Secret Manager or environment variables for managing secrets.
+Networking Security: Implement VPC Service Controls and Private Google Access to minimize exposure to the public internet. Use Cloud Armor to protect against DDoS attacks.
+Encryption: Ensure data at rest and in transit is encrypted. Use customer-managed encryption keys (CMEK) where applicable for greater control.
+
+Reliability and Scalability
+High Availability: Design your infrastructure for high availability by deploying resources across multiple zones/regions where applicable (e.g., Cloud SQL read replicas, Cloud Run service region redundancy).
+Load Testing: Before going live, conduct load testing to understand how your infrastructure performs under stress and identify potential bottlenecks.
+Monitoring and Alerting: Utilize Google Cloud Operations Suite (Monitoring and Logging) to set up comprehensive monitoring and alerting for your infrastructure and applications. Monitor key metrics and set up alerts for anomalous behavior.
+Disaster Recovery: Implement disaster recovery strategies, including backup and restore procedures for critical data and configuration. Document and regularly test your recovery process.
+
+Deployment and Maintenance
+CI/CD Integration: Integrate Terraform with CI/CD pipelines to automate deployments and apply infrastructure changes through a controlled process.
+Change Management: Adopt a structured change management process for applying updates to your infrastructure, including testing in staging environments before production deployments.
+Documentation: Keep comprehensive documentation of your infrastructure architecture, deployment processes, and operational procedures.
+
+Scalability Considerations
+Auto-scaling: Leverage auto-scaling capabilities of Cloud Run and other managed services to automatically adjust resource allocation in response to traffic patterns.
+Load Balancing: Use HTTP(S) Load Balancing to distribute traffic across services and regions, enhancing performance and fault tolerance.
