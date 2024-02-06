@@ -2,7 +2,7 @@
 
 terraform {
   backend "gcs" {
-    bucket  = "rns-gcs"
+    bucket  = "rns-state-devops-rns"
     prefix  = "terraform/state/gcp-vpc"
   }
 }
